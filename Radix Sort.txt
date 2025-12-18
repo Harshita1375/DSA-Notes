@@ -1,0 +1,42 @@
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+        System.out.println("Original arr");
+        int[] arr={10,45,24,757,903,3,459,29,490};
+        for(int i=0;i<arr.length;i++) System.out.print(arr[i]+" ");
+        radix(arr,arr.length);
+        System.out.println("\nRadix Sort arr");
+        for(int i=0;i<arr.length;i++) System.out.print(arr[i]+" ");
+        
+    }
+    public static void radix(int[] arr,int n){
+        int m=getMax(arr,n);
+        for(int i=1;m/i>0;i*=10){
+            countsort(arr,n,i);
+        }
+    }
+    public static void countsort(int[] arr,int n,int exp){
+        int[] count=new int[10];
+        int[] output=new int[n];
+        for(int i=0;i<n;i++){
+            count[(arr[i]/exp)%10]++;
+        }
+        for(int i=1;i<10;i++){
+            count[i]+=count[i-1];
+        }
+        for(int i=n-1;i>=0;i--){
+            output[count[(arr[i]/exp)%10]-1]=arr[i];
+            count[(arr[i]/exp)%10]--;
+        }
+        for(int i=0;i<n;i++){
+            arr[i]=output[i];
+        }
+    }
+    public static int getMax(int[] arr,int n){
+        int m=arr[0];
+        for(int i=1;i<n;i++) m=Math.max(m,arr[i]);
+        return m;
+    }
+}
